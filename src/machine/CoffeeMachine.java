@@ -12,9 +12,7 @@ public class CoffeeMachine {
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in);
-        printStats();
         doAction();
-        printStats();
     }
 
     public static void printStats() {
@@ -27,33 +25,36 @@ public class CoffeeMachine {
     }
 
     public static void doAction() {
-        System.out.println("\nWrite action (buy, fill, take):");
-        String action;
         while (true) {
-            action = scanner.next();
-            if ("buy".equals(action) || "fill".equals(action) || "take".equals(action)) {
-                break;
-            } else {
-                System.out.println("Error! Write correct action (buy, fill, take):");
+            System.out.println("Write action (buy, fill, take, remaining, exit):");
+            String action = scanner.next();
+            System.out.println();
+            switch (action) {
+                case "buy":
+                    buy();
+                    break;
+                case "fill":
+                    fill();
+                    break;
+                case "take":
+                    System.out.printf("I gave you $%d%n", money);
+                    money = 0;
+                    break;
+                case "remaining":
+                    printStats();
+                    break;
+                case "exit":
+                    return;
+                default:
+                    System.out.println("Error! Write correct action (buy, fill, take, remaining, exit):");
+                    break;
             }
+            System.out.println();
         }
-        switch (action) {
-            case "buy":
-                buy();
-                break;
-            case "fill":
-                fill();
-                break;
-            case "take":
-                System.out.printf("I gave you $%d%n", money);
-                money = 0;
-                break;
-        }
-        System.out.println();
     }
 
     public static void buy() {
-        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:");
         int order = 0;
         while (order == 0) {
             String orderS = scanner.next();
@@ -62,19 +63,13 @@ public class CoffeeMachine {
                 if (order < 1 || order > 3) {
                     order = 0;
                 }
+            } else if ("back".equals(orderS)) {
+                return;
+            } else {
+                System.out.println("Error");
             }
         }
-        switch (order) {
-            case 1:
-                makeEspresso();
-                break;
-            case 2:
-                makeLatte();
-                break;
-            case 3:
-                makeCappuccino();
-                break;
-        }
+        makeCoffee(order - 1);
     }
 
     public static void fill() {
@@ -117,46 +112,21 @@ public class CoffeeMachine {
         cupsPool += cups;
     }
 
-    public static void makeEspresso() {
-        final int water = 250;
-        final int beans = 16;
-        final int price = 4;
+    public static void makeCoffee(int type) {
+        final int[] water = {250, 350, 200};
+        final int[] milk = {0, 75, 100};
+        final int[] beans = {16, 20, 12};
+        final int[] price = {4, 7, 6};
 
-        if (waterPool >= water && beansPool >= beans && cupsPool >= 1) {
-            money += price;
-            waterPool -= water;
-            beansPool -= beans;
+        if (waterPool >= water[type] && milkPool >= milk[type] && beansPool >= beans[type] && cupsPool >= 1) {
+            waterPool -= water[type];
+            milkPool -= milk[type];
+            beansPool -= beans[type];
+            money += price[type];
             cupsPool -= 1;
-        }
-    }
-
-    public static void makeLatte() {
-        final int water = 350;
-        final int milk = 75;
-        final int beans = 20;
-        final int price = 7;
-
-        if (waterPool >= water && milkPool >= milk && beansPool >= beans && cupsPool >= 1) {
-            money += price;
-            waterPool -= water;
-            milkPool -= milk;
-            beansPool -= beans;
-            cupsPool -= 1;
-        }
-    }
-
-    public static void makeCappuccino() {
-        final int water = 200;
-        final int milk = 100;
-        final int beans = 12;
-        final int price = 6;
-
-        if (waterPool >= water && milkPool >= milk && beansPool >= beans && cupsPool >= 1) {
-            money += price;
-            waterPool -= water;
-            milkPool -= milk;
-            beansPool -= beans;
-            cupsPool -= 1;
+            System.out.println("I have enough resources, making you a coffee!");
+        } else {
+            System.out.println("Sorry, not enough water!");
         }
     }
 
