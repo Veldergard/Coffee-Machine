@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="CoffeeMachineTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-07-16T00:46:22" hostname="DESKTOP-8G0L9I2" time="0.339">
+<testsuite name="CoffeeMachineTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-07-19T00:15:21" hostname="DESKTOP-8G0L9I2" time="0.258">
   <properties/>
-  <testcase name="start" classname="CoffeeMachineTest" time="0.339"/>
+  <testcase name="start" classname="CoffeeMachineTest" time="0.258"/>
   <system-out><![CDATA[?[1;31m
 Start test 1?[0m
 Write action (buy, fill, take, remaining, exit):
@@ -245,7 +245,6 @@ Write action (buy, fill, take, remaining, exit):
 
 What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:
 > back
-
 Write action (buy, fill, take, remaining, exit):
 > remaining
 
